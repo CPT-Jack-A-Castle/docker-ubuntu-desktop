@@ -98,31 +98,13 @@ if [[ -v ENABLE_XRDP ]]; then
         chmod 3777 /var/run/xrdp/sockdir
     fi
 fi
-if [[ -v CREATE_USERS ]]; then
-  file="/root/createusers.txt"
-  if [ -f $file ]
-    then
-      while IFS=: read -r username password is_sudo
-          do
-              echo "Username: $username, Password: $password , Sudo: $is_sudo"
-
-              if getent passwd $username > /dev/null 2>&1
-                then
-                  echo "User Exists"
-                else
-                  useradd -ms /bin/bash $username
-                  echo "$username:$password" | chpasswd
-                  if [ "$is_sudo" = "Y" ]
-                    then
-                      usermod -aG sudo $username
-                  fi
-              fi
-      done <"$file"
-  fi
-fi
 if [[ -v USE_MATE ]]; then
   touch ~/mate-session
   echo "mate-session" > /etc/skel/.xsession
+fi
+if [[ -v USE_NOVNC ]]; then
+  touch ~/novnc
+  rm -Rf /etc/supervisor/conf.d/novnc.conf
 fi
 # clearup
 PASSWORD=

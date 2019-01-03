@@ -116,8 +116,9 @@ Build
 ==================
 
 ```
+git clone --recursive https://github.com/nitr8/docker-ubuntu-desktop
 docker build -t whumphrey/ubuntu-desktop .
 docker run -p 3389:3389 -p 6081:443 -p 9001:9001 -e USER=test -e PASSWORD=user -e HOME=/home/test -e ENABLE_XRDP=true whumphrey/ubuntu-desktop
-docker run -it --rm -p 3389:3389 -p 6080:80 -p 2222:22 -p 9001:9001 -e USER=doro -e PASSWORD=password -e ENABLE_XRDP=true -e ENABLE_SSH=true whumphrey/ubuntu-desktop
+docker run -it --rm -p 3389:3389 -p 6080:80 -p 2222:22 -p 9001:9001 -e USER=doro -e PASSWORD=password -e ENABLE_XRDP=true -e ENABLE_SSH=true -e USE_MATE=true -e USE_NOVNC=true -v $PWD/home:/home whumphrey/ubuntu-desktop
 CONTAINER_ID=$(docker run -d -P ubuntu-desktop)
 ```
